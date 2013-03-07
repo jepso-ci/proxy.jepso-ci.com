@@ -17,10 +17,10 @@ app.use(express.static(join(__dirname, 'public')));
 var cache = {};
 var clearing = {};
 
-var pattern = /^\/([a-zA-Z0-9][a-zA-Z0-9-]*)\/([a-zA-Z0-9_\-\.]+)\/([^ \/]+)(\/.*)?$/i;
+var pattern = /^\/([a-z0-9][a-z0-9-]*)\/([a-z0-9_\-\.]+)\/([^ \/]+)(\/.*)?$/i;
 app.use(function (req, res, next) {
   var match;
-  if (match = pattern.exec(req.path)) {
+  if (match = pattern.exec(req.path.toLowerCase())) {
     var user = match[1];
     var repo = match[2];
     var tag = match[3];
