@@ -1,6 +1,6 @@
 {
   "name": "proxy.jepso-ci.com",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "scripts": {
     "start": "node server.js"
   },
@@ -9,7 +9,7 @@
     "jepso-ci-config": "~2.0",
     "express": "~3.1",
     "gethub": "~1.0",
-    "jproxy": "~0.0.2",
+    "jproxy": "~0.0.4",
     "q": "~0.9",
     "npm": "~1.2.14",
     "rimraf": "~2.1.4"
