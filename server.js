@@ -41,8 +41,10 @@ app.use(function (req, res, next) {
 function getRepoProxy(user, repo, tag) {
   var id = user + '/' + repo + '/' + tag;
   if (cache[id]) return cache[id];
+  console.log('Downloading ' + id);
   return cache[id] = gethub(user, repo, tag, join(__dirname, 'cache', user, repo, tag))
     .then(function () {
+      console.log('Installing ' + id);
       return Q.nfbind(fs.stat)(join(__dirname, 'cache', user, repo, tag, 'package.json'))
         .then(function () {
           return install(join(__dirname, 'cache', user, repo, tag));
@@ -51,6 +53,7 @@ function getRepoProxy(user, repo, tag) {
       throw new Error('Failed to find ' + user + '/' + repo + '/' + tag);
     })
     .then(function () {
+      console.log('Getting Config ' + id);
       return Q(getConfig(join(__dirname, 'cache', user, repo, tag)))
         .then(function (res) {
           if (res.proxy) return res.proxy;
@@ -63,6 +66,7 @@ function getRepoProxy(user, repo, tag) {
           return {};
         })
         .then(function (config) {
+          console.log('Generating Proxy ' + id);
           return jproxy(join(__dirname, 'cache', user, repo, tag), config);
         });
     })
