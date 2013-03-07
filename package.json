@@ -14,5 +14,12 @@
     "npm": "~1.2.14",
     "win-spawn": "~1.1.1",
     "rimraf": "~2.1.4"
+  },
+  "subdomain": "jproxy",
+  "domains": [
+    "proxy.jepso-ci.com"
+  ],
+  "engines": {
+    "node": "0.8.x"
   }
 }

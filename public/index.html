@@ -17,6 +17,65 @@
         <input id="tag-input" type="text" placeholder="Tag (default: master)" />
         <button id="go" class="btn">GO!</button>
       </form>
+      <h2>Caching</h2>
+      <p>In order to stand a hope of not being increadibly slow and crashing all the time.  This proxy caches fairly agressively.  There are a couple of things you can do to get round this.</p>
+      <ol>
+        <li>Use a tag value other than master.  If you use the tag value of the latest commit, you'll always bypass the cache.</li>
+        <li>Run the proxy locally by using <code>npm install jproxy -g</code> to install and then <code>jproxy</code> to run it in the directory where your projects repository resides.  This will let you see changes without even pushing to GitHub and is great for rapid testing/bug fixing.</li>
+      </ol>
+      <h2>Advanced Configuration</h2>
+      <p>The proxy can support some really increadible things.  It will be extended to support much more in the future, but for now it supports <a href="http://component.io">component</a> and <a href="http://browserify.org/">browserify</a>.</p>
+      <h3>Configuring Component</h3>
+      <p>If you're using component you likely already have a <code>component.json</code> file so the best bet is to simply put the configuration in that so your <code>component.json</code> file looks like:</p>
+      <pre><code>{
+  "jproxy": {
+    "component": true
+  }
+}</code></pre>
+      <p>If your <code>component.json</code> file is not in the root of your repository, this won't work.  In that case you can create a separate <code>.jproxy.json</code> file which should just look like:</p>
+      <pre><code>{
+  "component": true
+}</code></pre>
+      <p>If you don't want to have the component built in development mode, that's easy to, just add the apropriate option:</p>
+      <pre><code>{
+  "component": {
+    "options": {
+      "dev": false
+    }
+  }
+}</code></pre>
+      <p>You can also disable the sourceURLs feature while remaining in development mode:</p>
+      <pre><code>{
+  "component": {
+    "options": {
+      "srcURLs": false
+    }
+  }
+}</code></pre>
+      <h3>Configuring Browserify</h3>
+      <p>If you're using browserify you likely already have a <code>package.json</code> file so the best bet is to simply put the configuration in that so your <code>package.json</code> file looks like:</p>
+      <pre><code>{
+  "jproxy": {
+    "browserify": true
+  }
+}</code></pre>
+      <p>If your <code>package.json</code> file is not in the root of your repository, this won't work.  In that case you can create a separate <code>.jproxy.json</code> file which should just look like:</p>
+      <pre><code>{
+  "browserify": true
+}</code></pre>
+      <p>If you use that default configuration you'll be browserifying all JavaScript files that are requested.  Often that's not quite what you want.  If you wanted to browserify all JavaScript except files called "mocha.js" you can just have:</p>
+      <pre><code>{
+  "browserify": {
+    "exclude": "*/mocha.js"
+  }
+}</code></pre>
+      <p>You can also just explicitly browserify a few particular files:</p>
+      <pre><code>{
+  "browserify": {
+    "include": ["/client.js", "/browser.js", "*.browserify.js"]
+  }
+}</code></pre>
+    </div>
     <script src="client.js"></script>
   </body>
 </html>
