@@ -31,6 +31,7 @@ app.use(function (req, res, next) {
       })
       .then(function (proxy) {
         if (!file) return next();
+        console.log('serving ' + req.path);
         proxy(file, res, next);
       })
       .done(null, next);
