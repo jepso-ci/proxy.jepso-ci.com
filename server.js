@@ -4,7 +4,8 @@ var jproxy = require('jproxy');
 var getConfig = require('jepso-ci-config').loadLocal;
 var join = require('path').join;
 var fs = require('fs');
-var install = require('./lib/npm-install')
+var install = require('./lib/npm-install');
+var componentInstall = require('component-install');
 var rimraf = require('rimraf');
 
 
@@ -49,7 +50,15 @@ function getRepoProxy(user, repo, tag) {
       return Q.nfbind(fs.stat)(join(__dirname, 'cache', user, repo, tag, 'package.json'))
         .then(function () {
           return install(join(__dirname, 'cache', user, repo, tag));
-        }, function () {});
+        })
+        .then(null, function () {})
+        .then(function () {
+          return Q.nfbind(fs.stat)(join(__dirname, 'cache', user, repo, tag, 'component.json'))
+        })
+        .then(function () {
+          return componentInstall(join(__dirname, 'cache', user, repo, tag), true);
+        })
+        .then(null, function () {})
     }, function (err) {
       throw new Error('Failed to find ' + user + '/' + repo + '/' + tag);
     })
