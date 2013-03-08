@@ -101,7 +101,7 @@ app.get('/:user/:repo', function (req, res) {
   res.redirect('/' + req.params.user + '/' + req.params.repo + '/master');
 });
 app.get('/:user/:repo/:tag', function (req, res, next) {
-  Q(getConfig(join(__dirname, 'cache', req.params.user, req.params.repo, req.params.tag)))
+  Q(getConfig(join(__dirname, 'cache', req.params.user.toLowerCase(), req.params.repo.toLowerCase(), req.params.tag.toLowerCase())))
     .done(function (config) {
       res.redirect(req.path + config.url);
     }, function () {
